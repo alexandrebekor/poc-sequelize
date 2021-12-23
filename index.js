@@ -9,7 +9,7 @@ const routePages = require('./routes/pages')
 const routeUsers = require('./routes/users')
 
 // import database
-const { Sequelize } = require('sequelize')
+const { sequelize } = require('./models/_db')
 
 // SERVER
 app.use(express.json())
@@ -26,21 +26,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', routePages)
 app.use('/users', routeUsers)
 
-// DATABASE
-const sequelize = new Sequelize('poc-sequelize', 'postgres', 'admin', {
-    host: 'localhost',
-    port: '5433',
-    dialect: 'postgres'
+sequelize.sync().then(() => {
+    app.listen(port, console.log('Server is running'))
 })
-
-const connect = async () => {
-    try {
-        await sequelize.authenticate()
-            .then(app.listen(port))
-        console.log('connected')
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-connect()

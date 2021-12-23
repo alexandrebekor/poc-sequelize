@@ -1,0 +1,14 @@
+<%- include('../template/header') %>
+<main>
+  <h2>Cadastro</h2>
+  <form action="/users/2" method="post">
+    <label for="firstName">Nome</label>
+    <input id="firstName" name="firstName" type="text" />
+
+    <label for="lastName">Sobrenome</label>
+    <input id="lastName" name="lastName" type="text" />
+
+    <button type="submit">Enviar</button>
+  </form>
+</main>
+<%- include('../template/footer') %>
