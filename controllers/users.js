@@ -1,32 +1,40 @@
-const { models } = require('../models/_db')
+const index = async (User, req, res) => {
+    const { id } = req.params
+    if (id) {
+        const user = await User.findAll({
+            where: {
+                id
+            }
+        })
+        res.send(user)
+    }
 
-const index = (req, res) => {
-    res.render('users/index')
+    const users = await User.findAll()
+    res.render('users/index', {
+        users
+    })
 }
 
 const create = (req, res) => {
     res.render('users/create')
 }
 
-const store = async (req, res) => {
+const store = async (User, req, res) => {
     const { firstName, lastName } = req.body
 
-    await models.User.create({
+    const user = await User.create({
         firstName,
         lastName
     })
 
-    res.send({
-        firstName,
-        lastName
-    })
+    res.redirect('/users')
 }
 
-const update = async (req, res) => {
+const update = async (User, req, res) => {
     const { id } = req.params
     const { firstName, lastName } = req.body
 
-    await models.User.update({
+    const user = await User.update({
         firstName,
         lastName
     }, {
@@ -35,25 +43,19 @@ const update = async (req, res) => {
         }
     })
 
-    res.send({
-        firstName,
-        lastName,
-        id
-    })
+    res.send(user)
 }
 
-const destroy = async (req, res) => {
+const destroy = async (User, req, res) => {
     const { id } = req.params
 
-    await models.User.destroy({
+    const user = await User.destroy({
         where: {
             id
         }
     })
 
-    res.send({
-        id
-    })
+    res.send(user)
 }
 
 module.exports = {
