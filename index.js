@@ -26,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', routePages)
 app.use('/users', routeUsers)
 
+
 sequelize.sync().then(() => {
     app.listen(port, console.log('Server is running'))
 })

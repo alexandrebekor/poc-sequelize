@@ -8,9 +8,16 @@ const sequelize = new Sequelize('poc-sequelize', 'postgres', 'admin', {
 const users = require('./users')
 const User = users(sequelize, DataTypes)
 
+const categories = require('./categories')
+const Category = categories(sequelize, DataTypes)
+
+// RELATIONSHIP
+Category.hasMany(User)
+
 module.exports = {
     sequelize,
     models: {
-        User
+        User,
+        Category
     }
 }
